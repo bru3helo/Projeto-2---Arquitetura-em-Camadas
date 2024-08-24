@@ -1,0 +1,185 @@
+Documentação da Arquitetura do Código XML 'faculty_menu.xml' 
+
+Este código XML é utilizado para configurar menus no sistema Odoo. Este código define itens de menu relacionados à gestão de faculdades.
+
+1. Visão Geral
+O XML configura dois itens de menu no sistema Odoo, um item de menu principal e um item de submenu, ambos associados a uma ação específica e restritos a um grupo de usuários.
+
+2. Camadas da Arquitetura
+  2.1. Camada de Apresentação
+  Descrição: Esta camada lida com a exibição de dados e a interface do usuário. No XML, esta camada é configurada por meio de itens de menu que são exibidos na interface do sistema Odoo.
+  Recursos:
+  - Item de Menu Principal (`menu_op_faculty_root`):
+    - ID: `menu_op_faculty_root`
+    - Nome: "Faculties"
+    - Ícone: `web_icon="openeducat_core,static/description/icon_faculty.png"`
+    - Sequência: `250` (define a ordem de exibição no menu) 
+  - Item de Menu Secundário (`menu_op_faculty_details`):
+    - ID: `menu_op_faculty_details`
+    - Nome: "Profile"
+    - Parent: `openeducat_core.menu_op_faculty_root` (indica que é um submenu do item de menu principal)
+    - Sequência: `20` (define a ordem de exibição entre outros submenus)
+    - Ação: `act_open_op_faculty_view_2` (referência a uma ação específica associada a este menu)
+    - Grupo de Usuários: `openeducat_core.group_op_faculty` (restringe o acesso a este menu a um grupo de usuários específico)
+  Processos Principais:
+  - Exibição de Menus: O item de menu principal é exibido na barra de navegação do Odoo. O submenu é exibido quando o usuário acessa o item de menu principal.
+  - Acesso e Visibilidade: A visibilidade do menu e do submenu é controlada por grupos de usuários, garantindo que apenas os usuários com permissões apropriadas possam visualizar e acessar as opções de menu.
+  
+  2.2. Camada de Lógica de Negócios
+  Descrição: Embora o XML não contenha lógica de negócios diretamente, ele define como os itens de menu estão relacionados e quais ações devem ser executadas. A lógica associada à ação `act_open_op_faculty_view_2` seria definida em outro lugar, normalmente no código Python do módulo.
+  Recursos:
+  - Ação de Menu: O submenu `menu_op_faculty_details` está associado a uma ação (`act_open_op_faculty_view_2`), que deve ser definida em outro arquivo XML ou no código Python. Esta ação é responsável por exibir a visualização ou formulário relacionado. 
+  Processos Principais:
+  - Navegação: O item de menu principal e o submenu configuram a navegação dentro do módulo OpenEduCat, guiando os usuários para as funcionalidades relacionadas à gestão de faculdades.
+  
+  2.3. Camada de Dados
+  Descrição: A camada de dados no Odoo lida com a configuração e persistência de registros relacionados a menus e ações. O XML define como esses itens são armazenados e gerenciados no banco de dados do Odoo.
+  Recursos:
+  - Modelos `menuitem`: Configura os itens de menu no sistema, armazenando informações sobre a hierarquia, nome, ícone e sequência.
+  - Referências de Ação: Associado a uma ação específica que deve ser definida em outra parte do sistema.
+  Processos Principais:
+  - Persistência de Menu: Os itens de menu são armazenados no banco de dados e são carregados quando o sistema é inicializado ou atualizado.
+  
+  2.4. Camada de Integração
+  Descrição: A camada de integração lida com como os itens de menu e ações interagem com outras partes do sistema Odoo.
+  Recursos:
+  - Referências e Associação: Utiliza referências para associar menus a ações e definir a hierarquia e visibilidade. 
+  Processos Principais:
+  - Integração de Ação: Garante que as ações associadas aos itens de menu sejam corretamente integradas e acionadas quando os usuários interagem com o menu.
+
+3. Conclusão
+O código 'faculty_menu.xml' configura a exibição e o acesso a menus no sistema Odoo. Ele define um item de menu principal e um submenu associado a uma ação específica, com controle de visibilidade baseado em grupos de usuários. A configuração modular e a utilização de referências garantem que os menus e ações sejam integrados de forma eficiente, facilitando a navegação e o acesso às funcionalidades dentro do sistema.
+
+Documentação da Arquitetura do Código XML 'openeducat_core_menu.xml' 
+O código define a estrutura de menus e ações associadas no sistema Odoo. 
+
+1. Visão Geral
+O código XML configura a estrutura de menus, ações e itens de configuração no Odoo. Ele estabelece menus para diversas funcionalidades dentro do módulo OpenEduCat, incluindo gerenciamento de estudantes, faculdades, cursos, e configurações gerais.
+
+2. Camadas da Arquitetura
+
+  2.1. Camada de Apresentação
+  Descrição: Esta camada lida com a exibição de dados e a interface do usuário. No XML, esta camada é configurada por meio de itens de menu que são exibidos na interface do sistema Odoo.
+  Recursos:
+  - Itens de Menu:
+    - Menu Principal (`menu_op_school_root`): 
+      - ID: `menu_op_school_root`
+      - Nome: "SIS"
+      - Ícone: `web_icon="openeducat_core,static/description/sis.png"`
+      - Sequência: `220`
+      - Grupos: `group_op_back_office_admin` (visível para o grupo de administradores do back office)
+    - Menus Secundários:
+      - `menu_op_school_main` (Estudantes)
+      - `menu_op_faculty_main` (Faculdades)
+      - `menu_op_general_main` (Geral)
+      - `menu_op_school_config` (Configuração)
+      - `menu_op_school_config_course` (Gerenciamento de Cursos)
+      - `menu_op_school_config_subject` (Gerenciamento de Disciplinas)
+      - `menu_op_school_config_general` (Gerenciamento Geral)
+      - `menu_op_report_main` (Relatórios)
+      - `menu_openeducat_config` (Configurações Gerais)
+
+  Processos Principais:
+  - Exibição de Menus: Cada item de menu é exibido na barra de navegação do Odoo, permitindo aos usuários navegar pelas diferentes seções do módulo OpenEduCat.
+  - Acesso e Visibilidade: A visibilidade dos menus é controlada por grupos de usuários e configurações específicas, garantindo que apenas usuários com as permissões apropriadas possam acessar certas áreas.
+  
+  2.2. Camada de Lógica de Negócios
+  Descrição: Esta camada lida com a lógica central da aplicação e é configurada através de ações associadas aos itens de menu. O XML define como essas ações são integradas ao sistema.
+  Recursos:
+  - Ações Associadas:
+    - `action_openeducat_configuration`: Define uma ação para abrir as configurações gerais (`res.config.settings`) em um modo de formulário.
+    - Ações de Menus Secundários: Vários itens de menu estão associados a ações que abrem visualizações específicas, como:
+      - `act_open_op_student_view`(Visualização de Estudantes)
+      - `act_open_op_faculty_view` (Visualização de Faculdades)
+      - `act_open_op_course_view` (Visualização de Cursos)
+      - `act_open_op_batch_view` (Visualização de Turmas)
+      - `act_open_op_department_view` (Visualização de Departamentos)
+      - `act_open_op_subject_view` (Visualização de Disciplinas)
+      - `act_open_op_category_view` (Visualização de Categorias)
+      - `act_op_academic_year_view` (Visualização de Ano Acadêmico)
+      - `act_op_academic_term_view` (Visualização de Período Acadêmico)
+  
+  Processos Principais:
+  - Navegação e Funcionalidade: As ações associadas aos menus definem o que acontece quando um usuário seleciona um item de menu, como exibir uma visualização ou formulário específico.
+
+  2.3. Camada de Dados
+  Descrição: A camada de dados gerencia a configuração e persistência das informações relacionadas a menus e ações. O XML define como esses registros são armazenados e gerenciados no banco de dados do Odoo.
+  Recursos:
+  - Modelos `menuitem` e `ir.actions.act_window`: Define a estrutura dos menus e associações de ações.
+  - Referências de Ação: Cada item de menu pode estar associado a uma ação que é armazenada e gerenciada no banco de dados.
+  
+  Processos Principais:
+  - Persistência de Menus e Ações: Os itens de menu e as ações são armazenados no banco de dados, garantindo que a estrutura de navegação e as funcionalidades estejam disponíveis quando o sistema é carregado.
+  
+  2.4. Camada de Integração
+  Descrição: A camada de integração lida com a comunicação entre os diferentes módulos e componentes do sistema Odoo.
+  Recursos:
+  - Referências e Associação: Utiliza referências para associar menus a ações e garantir que a estrutura de navegação esteja integrada com as funcionalidades do sistema.
+  Processos Principais:
+  - Integração de Menus e Ações: Garante que os itens de menu e as ações associadas sejam corretamente integrados e acionados quando os usuários interagem com o menu.
+
+3. Conclusão
+O código configura a estrutura de menus e ações no sistema Odoo para o módulo OpenEduCat. Ele define um menu principal e vários submenus para gerenciar diferentes aspectos do sistema, como estudantes, faculdades, cursos e configurações gerais. As ações associadas aos menus determinam a funcionalidade disponível para os usuários. A estrutura modular e a configuração detalhada garantem uma navegação intuitiva e uma integração eficiente das funcionalidades dentro do sistema, facilitando a gestão e operação do módulo.
+
+
+Documentação da Arquitetura do Código XML 'student_menu.xml' 
+O código  configura a estrutura de menus para o módulo no sistema Odoo, especificamente focando em funcionalidades relacionadas a estudantes. A documentação a seguir detalha a arquitetura do código e explica os recursos referentes a cada camada e seus principais processos.
+
+1. Visão Geral
+O código  define itens de menu relacionados à gestão de estudantes, incluindo perfis de estudantes, registro de disciplinas e detalhes dos cursos dos estudantes. Esses menus são configurados para diferentes grupos de usuários, como administradores e faculdades.
+
+2. Camadas da Arquitetura
+2.1. Camada de Apresentação
+ Descrição: A camada de apresentação lida com a interface do usuário e como os itens de menu são exibidos no sistema Odoo. Este código XML configura a estrutura de menus que será visível para os usuários na interface do sistema.
+  Recursos:
+  - Itens de Menu:
+    - Menu Principal (`menu_op_student_root`):
+      - ID: `menu_op_student_root`
+      - Nome: "Students"
+      - Ícone: `web_icon="openeducat_core,static/description/icon_student.png"`
+      - Sequência: `260`
+      - Grupos: `openeducat_core.group_op_back_office_admin`, `openeducat_core.group_op_faculty` (visível para os grupos de administradores do back office e faculdades)
+    
+    - Menus Secundários:
+      - `menu_op_student_main_student` (Perfil dos Estudantes)
+      - `menu_op_general_student` (Geral)
+      - `subject_registration_student_menu` (Registro de Disciplinas)
+      - `student_course_menu` (Detalhes dos Cursos dos Estudantes)
+  
+  Processos Principais:
+  - Exibição de Menus: O menu principal "Students" é exibido na barra de navegação, com submenus que permitem acesso a funcionalidades específicas relacionadas a estudantes.
+  - Acesso e Visibilidade: A visibilidade dos itens de menu é controlada por grupos de usuários, garantindo que apenas usuários com as permissões apropriadas possam visualizar e acessar os menus.
+  
+  2.2. Camada de Lógica de Negócios
+    Descrição: A lógica de negócios é configurada através das ações associadas aos itens de menu. Embora o XML não contenha lógica de negócios diretamente, ele define como as ações são associadas aos menus e qual funcionalidade cada menu irá acionar.
+  
+  Recursos:
+  - Ações Associadas:
+    - `act_open_op_student_view_2`: Define uma ação para exibir a visualização detalhada dos perfis dos estudantes.
+    - `act_subject_registration_view`: Define uma ação para exibir a visualização de registro de disciplinas.
+    - `act_open_op_student_course_view`: Define uma ação para exibir os detalhes dos cursos dos estudantes.
+  
+  Processos Principais:
+  - Navegação e Funcionalidade: As ações associadas aos menus determinam o comportamento quando um usuário seleciona um item de menu, como abrir uma visualização ou formulário específico.
+  
+  2.3. Camada de Dados
+  Descrição: A camada de dados gerencia o armazenamento e a persistência das informações relacionadas aos menus e suas ações. O XML define como esses registros são armazenados e gerenciados no banco de dados do Odoo.
+  
+  Recursos:
+  - Modelos `menuitem`: Configura os itens de menu, definindo a hierarquia, nome, ícone e grupo de usuários.
+  - Referências de Ação: Cada item de menu está associado a uma ação que é armazenada e gerenciada no banco de dados.
+  
+  Processos Principais:
+  - Persistência de Menus e Ações: Os itens de menu e as ações associadas são armazenados no banco de dados do Odoo, tornando-os disponíveis na interface do usuário.
+  
+  2.4. Camada de Integração
+  Descrição: A camada de integração lida com a comunicação entre os itens de menu e as ações associadas dentro do sistema Odoo. Ela garante que os menus estejam corretamente integrados com as funcionalidades do sistema.
+  
+  Recursos:
+  - Referências e Associação: Utiliza referências para associar itens de menu a ações e definir a hierarquia e a visibilidade.
+  
+  Processos Principais:
+  - Integração de Menus e Ações: Garante que os itens de menu e as ações associadas sejam corretamente integrados e acionados quando os usuários interagem com o menu.
+
+3. Conclusão
+O código configura a estrutura de menus para funcionalidades relacionadas a estudantes no módulo. Ele define um menu principal e vários submenus para gerenciar perfis de estudantes, registro de disciplinas e detalhes dos cursos. As ações associadas aos menus controlam o comportamento das opções de menu, exibindo visualizações e formulários específicos. A configuração modular e detalhada garante uma navegação intuitiva e uma integração eficiente das funcionalidades dentro do sistema, facilitando a gestão e operação das funções relacionadas a estudantes.
