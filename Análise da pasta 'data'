@@ -1,4 +1,4 @@
-Documentação da Arquitetura do Código XML
+Documentação da Arquitetura do Código XML 'ir_cron_data.xml'
 
 O código XML define registros para o sistema Odoo, especificamente para agendamentos de tarefas automáticas e ações relacionadas. 
 
