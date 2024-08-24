@@ -1,0 +1,22 @@
+1. Camada de Aplicação (Lógica de Negócio)
+openeducat_admission: Gerencia o processo de admissão dos alunos.
+openeducat_assignment: Trata da gestão de tarefas e atribuições para os alunos.
+openeducat_attendance: Gerencia a presença dos alunos.
+openeducat_classroom: Relaciona-se com a gestão de salas de aula.
+openeducat_exam: Lida com a organização e gestão de exames.
+openeducat_facility: Gerencia as instalações escolares.
+openeducat_fees: Relacionado à gestão de taxas e pagamentos.
+openeducat_library: Gerencia os recursos da biblioteca.
+openeducat_parent: Lida com a comunicação e interação com os pais.
+openeducat_timetable: Relaciona-se com a criação e gestão de horários.
+2. Camada de Núcleo/Infraestrutura
+openeducat_core: Contém funcionalidades e componentes centrais que são compartilhados entre diferentes módulos do Openeducat.
+openeducat_erp: Provavelmente o módulo central que conecta todos os outros módulos e fornece integração com o sistema ERP.
+3. Camada de Apresentação (UI)
+web_openeducat: Provavelmente gerencia a interface web e as interações do usuário.
+4. Arquivos de Configuração e Metadados
+.coveragerc: Configurações para medir a cobertura de código durante testes.
+.gitattributes: Configurações de atributos do Git.
+.gitignore: Arquivo de configuração do Git para ignorar determinados arquivos.
+LICENSE: Licença do software.
+README.md: Documento de apresentação do projeto.
