@@ -1,0 +1,42 @@
+Documentação da Arquitetura do Código XML
+
+O código XML define registros para o sistema Odoo, especificamente para agendamentos de tarefas automáticas e ações relacionadas. 
+
+1. Visão Geral
+O código XML é utilizado para configurar e gerenciar tarefas agendadas (crons) e ações de janelas no Odoo, uma plataforma de ERP e CRM. O código configura uma tarefa periódica para atualizar notificações e ajusta ações de janelas associadas.
+
+2. Camadas da Arquitetura
+  2.1. Camada de Apresentação
+  Descrição: A camada de apresentação lida com a exibição de dados e interações do usuário. No código fornecido, não há elementos diretamente visíveis para a camada de apresentação, pois o XML está mais focado na configuração de agendamentos e ações administrativas.
+  Recursos:
+  - Ação de Janela: O registro `ir.actions.act_window` ajusta o domínio das ações de janela, especificando quais registros devem ser excluídos da visualização.
+  Processos Principais:
+  - Configuração de Visualizações: Embora o código XML não defina diretamente interfaces de usuário, ele ajusta a visibilidade de ações em janelas relacionadas a crons.
+  
+  2.2. Camada de Lógica de Negócios
+  Descrição: Esta camada é responsável por implementar a lógica central da aplicação. No contexto do XML, a lógica de negócios é configurada por meio de tarefas agendadas que executam funções específicas.
+  Recursos:
+  - Registro de Cron: O registro `ir_cron_module_update_notification_openeducat` define uma tarefa agendada que executa um método no modelo `publisher.warranty.contract`.
+  Processos Principais:
+  - Execução Periódica de Tarefas: O campo `code` especifica o método `model.update_notification_openeducat(None)`, que será chamado semanalmente para atualizar notificações.
+  - Configuração de Intervalos: Define a tarefa para ser executada a cada semana (`interval_number` e `interval_type`) e configura o próximo horário de execução (`nextcall`).
+  
+  2.3. Camada de Dados
+  Descrição: A camada de dados gerencia o armazenamento e a persistência das informações. O XML define como as tarefas e ações são armazenadas e configuradas no banco de dados do Odoo.
+  Recursos:
+  - Modelo `ir.cron`: Armazena informações sobre tarefas agendadas, incluindo nome, modelo associado, e parâmetros de execução.
+  - Modelo `ir.actions.act_window`: Configura ações de janela e domínios relacionados a essas ações.
+  Processos Principais:
+  - Persistência de Tarefas: O cron é salvo no banco de dados com detalhes sobre a frequência e o método a ser executado.
+  - Gestão de Ações de Janela: Ajusta a visibilidade e o comportamento das janelas de ação no sistema Odoo.
+  
+  2.4. Camada de Integração
+  Descrição: A camada de integração lida com a comunicação entre diferentes módulos e sistemas. O código XML configura a integração de tarefas e ações com o sistema Odoo.
+  Recursos:
+  - Referências e Links: Utiliza referências (`ref`) para vincular registros existentes e ajustar configurações de ações e tarefas.
+  Processos Principais:
+  - Configuração de Ações e Tarefas: Garante que as tarefas agendadas e ações de janela estejam corretamente integradas e funcionando conforme o esperado no sistema Odoo.
+
+3. Conclusão
+O código XML configura uma tarefa agendada e ajustes de ações de janela para o sistema Odoo. Utiliza registros no modelo `ir.cron` para definir tarefas periódicas e no modelo `ir.actions.act_window` para ajustar visualizações de janelas. A arquitetura segue as práticas comuns do Odoo para gerenciar agendamentos e ações administrativas, integrando a configuração com o sistema de forma modular e eficiente. 
+Esta configuração permite que o sistema execute tarefas automatizadas e ajuste comportamentos de interface de maneira controlada e personalizada, facilitando a manutenção e a escalabilidade do sistema.
