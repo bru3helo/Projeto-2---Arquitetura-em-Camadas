@@ -1,0 +1,93 @@
+Documentação do Arquivo: `ir.model.access.csv`
+
+Visão Geral
+Este arquivo `CSV` define as permissões de acesso aos modelos de dados no Odoo para o módulo do OpenEduCat. Cada linha especifica o nível de acesso (leitura, escrita, criação e exclusão) para um determinado grupo de usuários sobre um modelo específico. Isso garante que os usuários vejam e modifiquem apenas os dados que têm permissão para acessar, de acordo com seu grupo.
+
+Estrutura do Arquivo
+
+1. Cabeçalho
+   - `id`: Identificador único da regra de acesso.
+   - `name`: Nome da regra de acesso.
+   - `model_id:id`: Referência ao modelo de dados ao qual a regra se aplica.
+   - `group_id:id`: Referência ao grupo de usuários que recebe essa regra de acesso.
+   - `perm_read`: Permissão de leitura (0 ou 1).
+   - `perm_write`: Permissão de escrita (0 ou 1).
+   - `perm_create`: Permissão de criação (0 ou 1).
+   - `perm_unlink`: Permissão de exclusão (0 ou 1).
+
+2. Regras de Acesso Específicas
+   - Cada linha do arquivo define uma regra de acesso para um grupo específico em um determinado modelo de dados.
+
+Exemplos de Regras Definidas
+
+1. Acesso de Estudantes
+   - `access_op_student_student`**: Usuários no grupo `group_op_back_office_admin` têm permissão total (leitura, escrita, criação e exclusão) no modelo `op_student`.
+   - `access_op_student_faculty`**: Usuários no grupo `group_op_faculty` têm permissão de leitura, escrita e criação no modelo `op_student`, mas não podem excluir registros.
+
+2. Acesso de Cursos
+   - `access_op_course_faculty`: Usuários no grupo `group_op_faculty` têm permissão para ler, escrever e criar cursos, mas não podem excluí-los.
+   - `access_op_course_back_office_admin`: Usuários no grupo `group_op_back_office_admin` têm permissão total sobre os cursos.
+
+3. Acesso de Batchs
+   - `access_op_batch_faculty`: Usuários no grupo `group_op_faculty` têm permissão de leitura, escrita e criação, mas não podem excluir `Batchs`.
+   - `access_op_batch_back_office_admin`: Usuários no grupo `group_op_back_office_admin` têm permissão total sobre `Batchs`.
+
+Explicação das Permissões
+
+- `1` (True): O grupo tem permissão para a ação especificada.
+- `0` (False): O grupo **não** tem permissão para a ação especificada.
+
+A coluna `group_id:id` define para qual grupo a permissão se aplica. Por exemplo, `group_op_back_office_admin` geralmente tem permissões mais amplas, enquanto `group_op_faculty` tem permissões restritas a funções que não afetam a integridade geral dos dados.
+
+Importância da Segurança
+
+4. Este arquivo é essencial para manter a segurança e a integridade dos dados no sistema, garantindo que os usuários tenham apenas as permissões necessárias para suas funções
+
+Documentação do Arquivo 'op_security.xml'
+
+Visão Geral
+Este arquivo XML configura categorias de módulos e regras de acesso no Odoo, especificamente para o sistema OpenEduCat. Ele define as categorias para organização dos módulos e as regras de segurança para controlar o acesso dos usuários a diferentes modelos de dados, de acordo com seus grupos.
+
+Categorias de Módulos
+
+1. Marketing, Administração e Recursos Humanos
+   - Ajusta a ordem de exibição com base no campo `sequence`.
+
+2. Educação
+   - `module_category_all_openeducat`: Categoria geral para módulos educacionais.
+   - `module_category_all_other_education`: Outra categoria para módulos relacionados à educação.
+   - `module_category_openeducat`: Subcategoria de "OpenEduCat", associada à categoria principal "Educação".
+   - `module_category_openeducat_others`: Subcategoria para outros módulos relacionados ao OpenEduCat.
+
+Grupos de Usuários
+
+1. Grupo Faculty
+   - `group_op_faculty`: Associado à categoria "OpenEduCat". Inclui o usuário admin e herda permissões do grupo `base.group_user`.
+
+2. Grupo Back Office Admin
+   - `group_op_back_office_admin`: Também associado à categoria "OpenEduCat". Tem permissões mais amplas, incluindo acesso ao grupo `base.group_system`.
+
+3. Grupo Back Office
+   - `group_op_back_office`: Não associado a uma categoria específica. Imprime permissões de grupos mais amplos, incluindo `group_op_back_office_admin`, `group_op_faculty` e `base.group_partner_manager`.
+
+Regras de Acesso (ir.rules)
+
+1. Regras para Estudantes
+   - `student_login_rule`: Restringe o acesso a registros de estudantes ao usuário associado.
+   - `view_students_rule`: Permite que o grupo `group_op_faculty` veja todos os registros de estudantes.
+
+2. Regras para Faculty
+   - `faculty_login_rule`: Restringe o acesso aos registros de docentes ao usuário associado ou ao usuário associado a um registro de funcionário.
+   - `view_faculty_rule`: Permite que o grupo `group_op_back_office_admin` veja todos os registros de docentes.
+
+3. Regras para Registro de Disciplinas
+   - `student_subject_registration_rule`: Restringe o acesso aos registros de inscrição de disciplinas ao estudante associado ou seus dependentes.
+   - `view_all_subject_registration_rule`: Permite que o grupo `group_op_faculty` veja todos os registros de inscrições de disciplinas.
+
+4. Regras Multiempresa
+   - `academic_term_multi_comp_rule` e `academic_year_multi_comp_rule`: Regras que permitem o acesso a termos acadêmicos e anos acadêmicos em diferentes empresas dentro de uma estrutura multiempresa.
+
+5. Importância
+Este arquivo XML organiza e protege o sistema garantindo que os dados sejam acessíveis apenas por usuários autorizados, com permissões específicas para suas funções, mantendo assim a integridade e a segurança do sistema.
+
+
