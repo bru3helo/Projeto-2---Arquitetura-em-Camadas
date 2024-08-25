@@ -1,0 +1,79 @@
+A pasta `static` no sistema ERP Estudantil é destinada ao armazenamento de arquivos estáticos, que são usados para renderizar a interface do usuário e fornecer conteúdo visual e funcional ao sistema. A pasta contém subpastas e arquivos organizados para facilitar o acesso e a manutenção dos elementos de interface. Abaixo está uma descrição detalhada das subpastas e arquivos encontrados dentro da pasta `static`:
+
+1. Subpasta `description`
+- Imagens PNG (batch.png, courses.png, etc.): Contém imagens relacionadas a diferentes funcionalidades ou seções do sistema, como turmas, cursos, corpo docente, entre outros. Essas imagens são usadas para representar graficamente essas categorias no sistema.
+- HTML (index.html): Arquivo HTML que pode ser utilizado para descrever ou documentar o conteúdo da pasta ou exibir as imagens em um layout específico.
+- Imagens adicionais (openeducat_core_logo.png, etc.): Logotipos e ícones que fazem parte da identidade visual do sistema, podendo ser utilizados em cabeçalhos, rodapés ou outras seções da interface.
+
+2. Subpasta `xml`
+- Arquivos XML (base.xml, dashboard_ext.xml, etc.): Contém arquivos XML que provavelmente são usados para definir estruturas de dados, layout de dashboards, configurações do cliente web, e revisões de dados ou informações no sistema.
+
+3. Subpasta `xls`
+- Planilhas Excel (op_batch.xls, op_course.xls, etc.): Planilhas que parecem conter dados estruturados relacionados a turmas, cursos, corpo docente, estudantes, entre outros. Esses arquivos podem ser usados para importar ou exportar dados do sistema ou para a realização de análises offline.
+
+4. Subpasta `img`
+- Imagens: Contém imagens que são utilizadas no sistema, provavelmente para ícones, logotipos, ou outras partes visuais da interface.
+
+5. Subpasta `src`
+- Subpasta `img`: Pode conter imagens específicas usadas no desenvolvimento ou personalização de scripts e estilos.
+- Subpasta `js`: Contém arquivos JavaScript que são utilizados para adicionar interatividade à interface do sistema, como funcionalidades específicas em dashboards ou revisões.
+- Subpasta `scss`: Contém arquivos SCSS (Sassy CSS) que são utilizados para estilização da interface, definindo cores, layouts, fontes, entre outros aspectos visuais.
+- Subpasta `xml`: Armazena mais arquivos XML, possivelmente relacionados a configurações adicionais ou personalizações específicas do sistema.
+
+6. Subpasta `xls`
+- Planilhas adicionais: Estas são provavelmente duplicatas ou versões diferentes dos arquivos na subpasta principal `xls`, servindo para backup ou versões alternativas.
+
+Função da pasta `static`
+A pasta `static` é essencial para o funcionamento do front-end do ERP Estudantil. Ela armazena todos os recursos estáticos necessários para a exibição correta e funcionalidade do sistema, garantindo que a interface seja visualmente coerente e que os dados possam ser acessados e manipulados de maneira eficiente pelos usuários.
+
+
+Documentação cógigo 'index.html'
+Estrutura Geral
+- A página está dividida em múltiplas seções, cada uma com seu próprio conteúdo, imagens e textos explicativos.
+- Utiliza uma combinação de classes CSS específicas (`oe_container`, `oe_row`, `oe_span6`, etc.) para organizar e estilizar o layout.
+
+Seção 1: Introdução ao OpenEduCat Core
+- Título: "OpenEduCat Core"
+- Subtítulo: "Efficient management of students, faculties, courses and batches with a collaborative platform"
+- Conteúdo:
+  - Um link para uma demonstração online do sistema, acompanhado do logotipo do OpenEduCat (`openeducat_logo.png`).
+  - Um parágrafo explicando que o OpenEduCat é baseado em uma arquitetura de nível empresarial, pronto para ser utilizado tanto em infraestrutura local quanto em ambientes de nuvem escaláveis.
+  - Um botão de "Contact Us" direcionando para a página de contato.
+
+Seção 2: Gestão de Informações dos Estudantes
+- Título: "Student Information At Your Click"
+- Conteúdo: 
+  - Um parágrafo que descreve a capacidade do sistema de armazenar todas as informações relevantes sobre os estudantes, como endereço, grupo sanguíneo, conquistas, etc.
+  - Uma imagem (`student.png`) representando a funcionalidade de gestão de estudantes.
+
+Seção 3: Gestão de Corpo Docente
+- Título: "Easier Faculty Management"
+- Conteúdo:
+  - Um parágrafo descrevendo o sistema de gestão de corpo docente, que inclui um sistema integrado de RH para controlar informações como grau educacional, habilidades e folha de pagamento.
+  - Uma imagem (`faculty.png`) ilustrando a funcionalidade de gestão do corpo docente.
+
+Seção 4: Gestão de Disciplinas
+- Título: "Subject Management"
+- Conteúdo:
+  - Um parágrafo explicando o sistema de gestão de disciplinas, permitindo gerenciar detalhes como nome, código e tipo (teórico, prático ou ambos).
+  - Uma imagem (`subjects.png`) que acompanha a descrição da funcionalidade.
+
+Seção 5: Gestão de Cursos
+- Título: "Course Management"
+- Conteúdo:
+  - Um parágrafo que descreve o sistema de gestão de cursos, oferecendo informações detalhadas sobre cursos e suas disciplinas relacionadas, além da capacidade de gerenciar a relação entre cursos pai e filho.
+  - Uma imagem (`courses.png`) representando a funcionalidade de gestão de cursos.
+
+Seção 6: Gestão de Turmas
+- Título: "Batch Management"
+- Conteúdo:
+  - Um parágrafo descrevendo o sistema de gestão de turmas, que permite gerenciar turmas de estudantes de diferentes cursos.
+  - Uma imagem (`batch.png`) ilustrando a funcionalidade de gestão de turmas.
+
+Seção 7: Suporte e Contato
+- Título: "Need Any Help?"
+- Conteúdo:
+  - Botões que direcionam o usuário para diferentes formas de suporte e contato, incluindo email, página de contato, pedidos de personalização e política de devolução e reembolso.
+
+Considerações
+Cada seção da página é projetada para destacar uma funcionalidade específica do sistema OpenEduCat, usando uma combinação de texto explicativo e imagens ilustrativas. As imagens são referenciadas diretamente da pasta `static`, enquanto os textos e os botões oferecem acesso a mais informações ou funcionalidades adicionais. O layout é responsivo, com seções alternadas em cores claras e escuras para melhorar a legibilidade e a experiência do usuário.
