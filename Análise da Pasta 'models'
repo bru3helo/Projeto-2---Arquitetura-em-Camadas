@@ -161,7 +161,7 @@ Visão Geral
       Processos Principais:
       - Relações de Dados: O modelo `OpCategory` é utilizado para categorizar e organizar dados em outras partes do sistema.
 
-Arquivo `course.py`
+Documentação da Arquitetura do Código  `course.py`
 
 Modelo: OpCourse
 - Descrição: Representa cursos no sistema OpenEduCat.
@@ -180,7 +180,7 @@ Modelo: OpCourse
 - Funções Adicionais:
   - Método para obter templates de importação.
 
-Arquivo `department.py`
+Documentação da Arquitetura do Código  `department.py`
 
 Modelo: OpDepartment
 - Descrição: Representa departamentos no sistema OpenEduCat.
@@ -191,7 +191,7 @@ Modelo: OpDepartment
 - Funções Adicionais:
   - Ao criar um departamento, adiciona o departamento ao perfil do usuário.
 
-Arquivo `faculty.py`
+Documentação da Arquitetura do Código  `faculty.py`
 
 Modelo: OpFaculty
 - Descrição: Representa membros do corpo docente no sistema OpenEduCat.
@@ -211,28 +211,28 @@ Modelo: OpFaculty
   - Cria um registro de empregado no módulo de RH e atualiza as informações de parceiro.
   - Método para obter templates de importação.
 
-Arquivo `hr.py`
+Documentação da Arquitetura do Código  `hr.py`
 Modelo: HrEmployee (Herança)
 - Descrição: Estende o modelo `hr.employee` para incluir informações adicionais.
 - Funções Adicionais:
   - Atualiza e sincroniza o e-mail de trabalho e telefones com base nas informações do usuário e endereço.
 
 
-Arquivo `op_academic_term.py`
+Documentação da Arquitetura do Código  `op_academic_term.py`
    - Define o modelo `OpAcademicTerm`.
    - Campos principais: `name`, `term_start_date`, `term_end_date`, `academic_year_id`, `parent_term`, `company_id`.
    - Relaciona os termos acadêmicos com o ano acadêmico através de `academic_year_id`.
 
-Arquivo `op_academic_year.py`
+Documentação da Arquitetura do Código  `op_academic_year.py`
    - Define o modelo `OpAcademicYear`.
    - Campos principais: `name`, `start_date`, `end_date`, `term_structure`, `academic_term_ids`, `company_id`.
    - Contém um método `term_create` que cria termos acadêmicos com base na estrutura de termos (`term_structure`) selecionada.
 
-Arquivo `res_company.py`:
+Documentação da Arquitetura do Código  `res_company.py`:
     - Estende o modelo `res.company` para incluir campos adicionais como `signature`, `accreditation`, e `approval_authority`.
     - Também estende o modelo `res.users` para incluir novas funcionalidades como contagem de departamentos e gestão de usuários em relação a departamentos educacionais.
 
-Arquivo `res_config_setting.py`:
+Documentação da Arquitetura do Código  `res_config_setting.py`:
     - Estende o modelo `res.config.settings` para adicionar configurações de módulos relacionados ao OpenEduCat. Isso permite a ativação ou desativação de módulos específicos, como LMS, biblioteca, e outros módulos educacionais dentro do sistema.
 
 Pontos de Atenção observados nestes códigos
@@ -240,11 +240,11 @@ Pontos de Atenção observados nestes códigos
 - Configurações dos Módulos: No código `res_config_setting.py`, os vários módulos booleanos permitem que os administradores ativem/desativem funcionalidades específicas. Certificar de que as dependências entre módulos sejam gerenciadas corretamente para evitar inconsistências.
 - Herança de Modelos: Como você está herdando modelos Odoo padrão, é importante testar cuidadosamente para garantir que as novas funcionalidades não quebrem as funcionalidades existentes.
 
-Arquivo `student_portal.py`
+Documentação da Arquitetura do Código  `student_portal.py`
     - Modelo `StudentPortal`:
       - Estende o modelo `res.partner` para adicionar dois campos booleanos: `is_parent` e `is_student`. Isso permite identificar se um parceiro (partner) é um pai/mãe ou um aluno.
 
-Arquivo `student.py`
+Documentação da Arquitetura do Código  `student.py`
     - Modelo `OpStudentCourse`:
       - Define um modelo para detalhar o curso do aluno. Inclui campos como `student_id`, `course_id`, `batch_id`, `roll_number`, entre outros. Também aplica restrições SQL para garantir que o número de matrícula e o aluno sejam únicos por curso e lote (batch).
       - A função `get_import_templates` fornece um modelo de importação para a importação em massa de detalhes do curso.
@@ -255,3 +255,22 @@ Arquivo `student.py`
       - Aplica uma verificação (`_check_birthdate`) para garantir que a data de nascimento não seja maior que a data atual.
       - A função `create_student_user` cria um usuário no Odoo para o estudante, atribuindo-o ao grupo de portal.
 
+Documentação da Arquitetura do Código  `subject_registration.py`:
+    - Modelo `OpSubjectRegistration`:
+      - Este modelo gerencia o registro de disciplinas para os estudantes. Os campos incluem informações sobre o estudante (`student_id`), curso (`course_id`), lote (`batch_id`), e disciplinas obrigatórias e eletivas.
+      - Possui um campo de estado que acompanha o progresso do registro (`draft`, `submitted`, `approved`, `rejected`).
+      - Inclui métodos para alterar o estado e aprovar o registro, validando as matérias do aluno e atualizando o curso correspondente.
+      - Um método adicional, `get_subjects`, preenche as disciplinas obrigatórias com base no curso selecionado.
+
+Documentação da Arquitetura do Código  `subject.py`:
+    - Modelo `OpSubject`:
+      - Define o modelo para as disciplinas, com campos como `name`, `code`, `grade_weightage`, `type`, e `subject_type`.
+      - Permite a categorização das disciplinas como obrigatórias ou eletivas e está associado a um departamento.
+      - Aplica uma restrição SQL para garantir que o código da disciplina seja único.
+      - Inclui um método para fornecer um template de importação de disciplinas.
+
+Documentação da Arquitetura do Código  `update.py`:
+    - Modelo `PublisherWarrantyContract`:
+      - Este modelo estende a funcionalidade de contratos de garantia de publicador, que provavelmente lida com o envio de dados para o servidor OpenEduCat para atualizações e verificações de sistema.
+      - O método `_get_system_logs` compila informações sobre o banco de dados, usuários, módulos instalados, e outras métricas do sistema.
+      - Inclui um método para atualizar as notificações e logs de sistema, gerenciando as comunicações com o servidor externo.
