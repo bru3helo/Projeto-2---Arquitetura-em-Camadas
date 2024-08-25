@@ -1,0 +1,40 @@
+Documentação do Código `report_menu.xml`
+Visão Geral
+Este arquivo XML define as ações de relatório no sistema OpenEduCat, parte do módulo Odoo, relacionadas ao modelo `op.student`. O código cria duas ações de relatório, uma para o cartão de identificação do estudante (`Student ID Card`) e outra para o certificado de bonafide (`Bonafide Certificate`). As ações de relatório configuradas aqui geram PDFs com base em templates `QWeb`.
+
+Estrutura do Código
+
+1. Tag Root: `<odoo>`
+   - A tag raiz que encapsula todas as definições do Odoo.
+
+2. Tag `<data>`
+   - Contém os registros de dados que serão carregados no banco de dados do Odoo.
+
+3. Primeiro Registro: `action_report_student_idcard`
+   - ID: `action_report_student_idcard`
+   - Modelo: `ir.actions.report`
+   - Campos:
+     - `name`: Nome do relatório, "Student ID Card".
+     - `model`: Modelo associado, `op.student`.
+     - `report_type`: Tipo do relatório, `qweb-pdf`.
+     - `report_name`: Nome técnico do relatório, `openeducat_core.report_student_idcard`.
+     - `report_file`: Arquivo associado ao relatório.
+     - `print_report_name`: Nome formatado do relatório, incluindo o nome do estudante.
+     - `binding_model_id`: Associa o relatório ao modelo `op.student`.
+     - `binding_type`: Tipo de vinculação, `report`.
+
+4. Segundo Registro: `action_report_student_bonafide`
+   - ID: `action_report_student_bonafide`
+   - Modelo: `ir.actions.report`
+   - Campos:
+     - `name`: Nome do relatório, "Bonafide Certificate".
+     - `model`: Modelo associado, `op.student`.
+     - `report_type`: Tipo do relatório, `qweb-pdf`.
+     - `report_name`: Nome técnico do relatório, `openeducat_core.report_student_bonafide`.
+     - `report_file`: Arquivo associado ao relatório.
+     - `print_report_name`: Nome formatado do relatório, incluindo o nome do estudante.
+     - `binding_model_id`: Associa o relatório ao modelo `op.student`.
+     - `binding_type`: Tipo de vinculação, `report`.
+
+5. Este código define ações de relatórios vinculados ao modelo `op.student`, possibilitando a geração de documentos em PDF através do sistema Odoo. O primeiro relatório gera o cartão de identificação do estudante com base no nome do estudante. O segundo relatório gera um certificado bonafide, também personalizado com o nome do estudante. Esses relatórios podem ser acessados diretamente do registro do estudante dentro do sistema.
+
