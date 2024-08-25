@@ -1,0 +1,257 @@
+Documentação da Arquitetura do Código '__init__.py'
+1. Visão Geral
+O código faz parte do módulo OpenEduCat e é responsável por importar diferentes submódulos, cada um relacionado a uma área específica do sistema. Estes submódulos configuram e implementam funcionalidades específicas para o gerenciamento de instituições de ensino.
+ 
+2. Camadas da Arquitetura
+  2.1. Camada de Apresentação
+  Descrição: A camada de apresentação lida com a interface do usuário e a interação com o sistema. Embora o código Python em si não configure diretamente a interface, os submódulos importados frequentemente incluem componentes que definem como os dados são apresentados ao usuário.
+  Recursos:
+  - Submódulos Relacionados:
+    - `student_portal`: Pode incluir componentes que definem o portal do estudante, onde os alunos visualizam e interagem com suas informações pessoais e acadêmicas.
+  
+  Processos Principais:
+  - Integração de Interfaces: Os submódulos importados interagem com a camada de apresentação para fornecer visualizações e formulários necessários para a interface do usuário.
+  
+ 2.2. Camada de Lógica de Negócios
+  Descrição: A camada de lógica de negócios lida com a lógica central e as operações principais do sistema. Os submódulos importados implementam a lógica de negócios específica para diferentes aspectos do gerenciamento escolar.
+  Recursos:
+  - Submódulos Relacionados:
+    - `batch`: Gerencia turmas e suas operações associadas.
+    - `category`: Define e gerencia categorias de dados, possivelmente relacionadas a cursos ou disciplinas.
+    - `course`: Gerencia cursos oferecidos pela instituição.
+    - `faculty`: Gerencia informações e operações relacionadas ao corpo docente.
+    - `hr`: Gerencia recursos humanos, possivelmente incluindo funcionários e suas informações.
+    - `department`: Gerencia departamentos acadêmicos dentro da instituição.
+    - `student`: Gerencia informações e operações relacionadas aos estudantes.
+    - `subject`: Gerencia disciplinas oferecidas.
+    - `subject_registration`: Gerencia o registro de disciplinas pelos estudantes.
+    - `res_config_setting`: Configura as definições e configurações do sistema.
+    - `update`: Pode lidar com atualizações e manutenção do sistema.
+    - `op_academic_term`: Gerencia períodos acadêmicos.
+    - `op_academic_year`: Gerencia anos acadêmicos.
+  
+  Processos Principais:
+  - Implementação de Funcionalidade: Cada submódulo define e implementa funcionalidades específicas relacionadas às áreas que cobre, garantindo que as operações de negócios sejam realizadas de acordo com as necessidades da instituição.
+  
+  2.3. Camada de Dados
+  Descrição: A camada de dados gerencia a persistência e a manipulação das informações no banco de dados. Embora o código fornecido não configure diretamente a persistência de dados, os submódulos importados frequentemente definem modelos e estruturas de dados.
+  Recursos:
+  - Submódulos Relacionados:
+    - `student`: Define o modelo de dados para estudantes.
+    - `course`: Define o modelo de dados para cursos.
+    - `subject`: Define o modelo de dados para disciplinas.
+    - `department`: Define o modelo de dados para departamentos.
+    - `hr`: Define o modelo de dados para recursos humanos.
+  
+  Processos Principais:
+  - Gerenciamento de Dados: Os submódulos importados definem a estrutura de dados e as operações necessárias para gerenciar as informações no banco de dados, como criação, leitura, atualização e exclusão de registros.
+  
+  2.4. Camada de Integração
+  Descrição: A camada de integração lida com a comunicação entre diferentes módulos e componentes do sistema. O código Python garante que todos os submódulos sejam importados e integrados corretamente.
+  Recursos:
+  - Submódulos Relacionados:
+    - `update`: Pode gerenciar a integração de atualizações entre diferentes partes do sistema.
+    - `student_portal`: Integra o portal do estudante com outras funcionalidades do sistema.
+  
+  Processos Principais:
+  - Coordenação de Módulos: O código Python importa e coordena diferentes submódulos, assegurando que eles funcionem em conjunto e integrem suas funcionalidades para fornecer uma solução coesa.
+
+Documentação da Arquitetura do Código 'batch.py'
+Define um modelo para a entidade "OpBatch" no sistema OpenEduCat usando o framework Odoo.
+
+1. Visão Geral
+O código Python define o modelo `OpBatch` para gerenciar turmas no sistema OpenEduCat. Ele inclui campos para informações básicas sobre a turma, validações de dados e métodos específicos para busca e importação de dados.
+
+2. Camadas da Arquitetura
+Camada de Apresentação
+Descrição: A camada de apresentação lida com a interface do usuário e como as informações do modelo `OpBatch` são exibidas. O código Python não define diretamente a interface, mas o modelo `OpBatch` será exibido através dos formulários e listas padrão do Odoo.
+Recursos:
+- Campos Definidos:
+  - `code`: Código da turma, obrigatório e deve ser único.
+  - `name`: Nome da turma, obrigatório.
+  - `start_date`: Data de início da turma, obrigatória e com valor padrão definido para a data atual.
+  - `end_date`: Data de término da turma, obrigatória.
+  - `course_id`: Relacionamento com o modelo `op.course`, obrigatório.
+  - `active`: Indica se a turma está ativa.
+
+Processos Principais:
+- Exibição de Dados: Os campos definidos no modelo serão utilizados para exibir e editar informações sobre turmas nas interfaces do Odoo.
+
+Camada de Lógica de Negócios
+Descrição: A camada de lógica de negócios lida com as regras e operações que são realizadas sobre os dados do modelo `OpBatch`. O código inclui validações e métodos específicos que controlam o comportamento do modelo.
+Recursos:
+- Validações:
+  - `check_dates`: Garante que a data de término não seja anterior à data de início. Se a condição for violada, uma exceção `ValidationError` é levantada.
+- Métodos Específicos:
+  - `name_search`: Personaliza a busca de nomes de turmas, especialmente quando a busca é realizada com um contexto específico (`get_parent_batch`). O método busca turmas associadas a um curso e seus cursos pais.
+  - `get_import_templates`: Fornece um modelo de importação para turmas, que pode ser usado para importar dados de turmas a partir de um arquivo XLS.
+Processos Principais:
+- Validação de Dados: O método `check_dates` valida as datas e impede a criação de registros com datas inconsistentes.
+- Busca Personalizada: O método `name_search` ajusta a busca para permitir uma busca mais refinada com base no contexto fornecido.
+- Importação de Dados: O método `get_import_templates` fornece um template para a importação de dados, facilitando a inclusão de novas turmas no sistema.
+
+Camada de Dados
+  Descrição: A camada de dados lida com a persistência e manipulação das informações no banco de dados. O modelo `OpBatch` define a estrutura de dados e as restrições associadas a turmas.
+  Recursos:
+  - Definição do Modelo:
+    - `OpBatch` herda de `mail.thread`, permitindo o rastreamento de mudanças e discussões.
+    - Campos definidos no modelo (`code`, `name`, `start_date`, `end_date`, `course_id`, `active`) correspondem às colunas da tabela `op_batch` no banco de dados.
+  - Restrições:
+    - `_sql_constraints`: Garante que o código da turma seja único em todo o sistema.
+
+Processos Principais:
+- Armazenamento de Dados: O modelo `OpBatch` define a estrutura para armazenar informações sobre turmas, incluindo as restrições para garantir a integridade dos dados.
+
+Camada de Integração
+  Descrição: A camada de integração lida com a comunicação entre o modelo `OpBatch` e outros componentes do sistema. Inclui a integração com outros modelos e funcionalidades do Odoo.
+  
+  Recursos:
+  - Integração com o Modelo `op.course`: O campo `course_id` estabelece uma relação com o modelo `op.course`, permitindo associar uma turma a um curso específico.
+  - Templates de Importação: O método `get_import_templates` define como os dados podem ser importados para o sistema, integrando a funcionalidade de importação de dados com o modelo `OpBatch`.
+  
+  Processos Principais:
+  - Relações de Dados: A relação entre `OpBatch` e `op.course` permite integrar turmas com cursos específicos.
+  - Importação de Dados: O método `get_import_templates` facilita a integração de dados de turmas a partir de arquivos externos.
+
+Documentação da Arquitetura do Código 'category.py'
+  O código define um modelo para a entidade "OpCategory" no sistema OpenEduCat usando o framework Odoo.
+
+Visão Geral
+  O código  define o modelo `OpCategory` para gerenciar categorias no sistema OpenEduCat. Ele inclui campos para informações básicas sobre a categoria e uma restrição de unicidade para garantir que os códigos das categorias sejam exclusivos.
+
+  Camadas da Arquitetura
+    Camada de Apresentação
+      Descrição: A camada de apresentação lida com a interface do usuário e como as informações do modelo `OpCategory` são exibidas. O código Python não define diretamente a interface, mas o modelo `OpCategory` será exibido através dos formulários e listas padrão do Odoo.
+    
+      Recursos:
+      - Campos Definidos:
+        - `name`: Nome da categoria, obrigatório.
+        - `code`: Código da categoria, obrigatório e deve ser único.
+      
+      Processos Principais:
+      - Exibição de Dados: Os campos definidos no modelo serão utilizados para exibir e editar informações sobre categorias nas interfaces do Odoo.
+      
+    Camada de Lógica de Negócios
+      Descrição: A camada de lógica de negócios lida com as regras e operações que são realizadas sobre os dados do modelo `OpCategory`. O código inclui uma restrição para garantir a unicidade dos códigos das categorias.
+      
+      Recursos:
+      - Restrições:
+        - `_sql_constraints`: Garante que o código da categoria seja único em todo o sistema. Se a restrição for violada, uma mensagem de erro é exibida.
+      
+      Processos Principais:
+      - Validação de Dados: A restrição definida em `_sql_constraints` impede a criação de categorias com códigos duplicados.
+      
+    Camada de Dados
+      Descrição: A camada de dados lida com a persistência e manipulação das informações no banco de dados. O modelo `OpCategory` define a estrutura de dados e as restrições associadas às categorias.
+      
+      Recursos:
+      - Definição do Modelo:
+        - `OpCategory` define a estrutura da tabela `op_category` no banco de dados.
+        - Campos definidos no modelo (`name`, `code`) correspondem às colunas da tabela no banco de dados.
+      
+      Processos Principais:
+      - Armazenamento de Dados: O modelo `OpCategory` define a estrutura para armazenar informações sobre categorias, incluindo a restrição de unicidade para o código.
+      
+    Camada de Integração
+      Descrição: A camada de integração lida com a comunicação entre o modelo `OpCategory` e outros componentes do sistema. O código Python define como as categorias são integradas com outras partes do sistema Odoo.
+      
+      Recursos:
+      - Integração com Outras Funcionalidades: O modelo `OpCategory` pode ser referenciado e utilizado em outros modelos e funcionalidades do sistema OpenEduCat.
+      
+      Processos Principais:
+      - Relações de Dados: O modelo `OpCategory` é utilizado para categorizar e organizar dados em outras partes do sistema.
+
+Arquivo `course.py`
+
+Modelo: OpCourse
+- Descrição: Representa cursos no sistema OpenEduCat.
+- Campos:
+  - `name`: Nome do curso (obrigatório).
+  - `code`: Código do curso (obrigatório e único).
+  - `parent_id`: Curso pai para hierarquia de cursos.
+  - `evaluation_type`: Tipo de avaliação (normal, GPA, CWA, CCE).
+  - `subject_ids`: Matérias associadas ao curso.
+  - `max_unit_load` e `min_unit_load`: Carga horária máxima e mínima.
+  - `department_id`: Departamento associado (padrão é o departamento do usuário).
+  - `active`: Status ativo do curso.
+- Restrições:
+  - Código do curso deve ser único.
+  - Não permite a criação de cursos recursivos.
+- Funções Adicionais:
+  - Método para obter templates de importação.
+
+Arquivo `department.py`
+
+Modelo: OpDepartment
+- Descrição: Representa departamentos no sistema OpenEduCat.
+- Campos:
+  - `name`: Nome do departamento (obrigatório).
+  - `code`: Código do departamento (obrigatório).
+  - `parent_id`: Departamento pai para hierarquia.
+- Funções Adicionais:
+  - Ao criar um departamento, adiciona o departamento ao perfil do usuário.
+
+Arquivo `faculty.py`
+
+Modelo: OpFaculty
+- Descrição: Representa membros do corpo docente no sistema OpenEduCat.
+- Campos:
+  - `partner_id`: Relacionado ao modelo `res.partner` para informações de contato.
+  - `first_name`, `middle_name`, `last_name`: Nome do docente.
+  - `birth_date`: Data de nascimento.
+  - `blood_group`, `gender`, `nationality`, `emergency_contact`, `visa_info`, `id_number`: Informações pessoais adicionais.
+  - `login` e `last_login`: Informações de login associadas.
+  - `faculty_subject_ids`: Matérias associadas ao docente.
+  - `emp_id`: Relacionado ao modelo `hr.employee` para integração com o módulo de recursos humanos.
+  - `main_department_id`, `allowed_department_ids`: Departamentos associados.
+  - `active`: Status ativo do docente.
+- Restrições e Funções Adicionais:
+  - Valida se a data de nascimento não é futura.
+  - Atualiza o campo `name` com base nos nomes fornecidos.
+  - Cria um registro de empregado no módulo de RH e atualiza as informações de parceiro.
+  - Método para obter templates de importação.
+
+Arquivo `hr.py`
+Modelo: HrEmployee (Herança)
+- Descrição: Estende o modelo `hr.employee` para incluir informações adicionais.
+- Funções Adicionais:
+  - Atualiza e sincroniza o e-mail de trabalho e telefones com base nas informações do usuário e endereço.
+
+
+Arquivo `op_academic_term.py`
+   - Define o modelo `OpAcademicTerm`.
+   - Campos principais: `name`, `term_start_date`, `term_end_date`, `academic_year_id`, `parent_term`, `company_id`.
+   - Relaciona os termos acadêmicos com o ano acadêmico através de `academic_year_id`.
+
+Arquivo `op_academic_year.py`
+   - Define o modelo `OpAcademicYear`.
+   - Campos principais: `name`, `start_date`, `end_date`, `term_structure`, `academic_term_ids`, `company_id`.
+   - Contém um método `term_create` que cria termos acadêmicos com base na estrutura de termos (`term_structure`) selecionada.
+
+Arquivo `res_company.py`:
+    - Estende o modelo `res.company` para incluir campos adicionais como `signature`, `accreditation`, e `approval_authority`.
+    - Também estende o modelo `res.users` para incluir novas funcionalidades como contagem de departamentos e gestão de usuários em relação a departamentos educacionais.
+
+Arquivo `res_config_setting.py`:
+    - Estende o modelo `res.config.settings` para adicionar configurações de módulos relacionados ao OpenEduCat. Isso permite a ativação ou desativação de módulos específicos, como LMS, biblioteca, e outros módulos educacionais dentro do sistema.
+
+Pontos de Atenção observados nestes códigos
+- Coerência dos Dados: Certifique-se de que os campos novos adicionados em `res.company` e `res.users` estão sendo corretamente utilizados e referenciados em outras partes do sistema.
+- Configurações dos Módulos: No código `res_config_setting.py`, os vários módulos booleanos permitem que os administradores ativem/desativem funcionalidades específicas. Certificar de que as dependências entre módulos sejam gerenciadas corretamente para evitar inconsistências.
+- Herança de Modelos: Como você está herdando modelos Odoo padrão, é importante testar cuidadosamente para garantir que as novas funcionalidades não quebrem as funcionalidades existentes.
+
+Arquivo `student_portal.py`
+    - Modelo `StudentPortal`:
+      - Estende o modelo `res.partner` para adicionar dois campos booleanos: `is_parent` e `is_student`. Isso permite identificar se um parceiro (partner) é um pai/mãe ou um aluno.
+
+Arquivo `student.py`
+    - Modelo `OpStudentCourse`:
+      - Define um modelo para detalhar o curso do aluno. Inclui campos como `student_id`, `course_id`, `batch_id`, `roll_number`, entre outros. Também aplica restrições SQL para garantir que o número de matrícula e o aluno sejam únicos por curso e lote (batch).
+      - A função `get_import_templates` fornece um modelo de importação para a importação em massa de detalhes do curso.
+  
+    - Modelo `OpStudent`:
+      - Define o modelo para um estudante, herdando de `res.partner` e estendendo com diversos campos como `first_name`, `middle_name`, `last_name`, `birth_date`, `blood_group`, entre outros.
+      - A função `_onchange_name` atualiza o nome completo com base nos campos de nome.
+      - Aplica uma verificação (`_check_birthdate`) para garantir que a data de nascimento não seja maior que a data atual.
+      - A função `create_student_user` cria um usuário no Odoo para o estudante, atribuindo-o ao grupo de portal.
+
