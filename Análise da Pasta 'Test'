@@ -1,0 +1,137 @@
+O arquivo `__init__.py` encontrado na pasta `tests` tem a função de transformar a pasta `tests` em um módulo Python. Isso permite que os testes contidos nela sejam importados e executados como um pacote. 
+
+Descrição do Conteúdo:
+- from . import test_core_common: 
+  - Esse comando importa o módulo `test_core_common.py` que está localizado na mesma pasta (`tests`). Esse arquivo provavelmente contém testes relacionados a funcionalidades comuns ou compartilhadas do sistema core.
+
+- from . import test_core: 
+  - Similarmente, este comando importa o módulo `test_core.py`, que possivelmente contém testes relacionados às funcionalidades principais do sistema core.
+
+Função Geral da Pasta `tests` e do Arquivo `__init__.py`:
+- Pasta `tests`:
+  - Esta pasta é dedicada a conter os scripts de teste para diferentes componentes ou funcionalidades do sistema. Os testes são essenciais para garantir que o sistema funcione corretamente e que novas atualizações ou modificações não causem regressões ou bugs.
+  
+- Arquivo `__init__.py`:
+  - Este arquivo possibilita que os diferentes módulos de teste (`test_core_common.py` e `test_core.py`) sejam organizados de maneira lógica e possam ser acessados de forma centralizada. Ele também permite a execução de testes em conjunto, facilitando a automação e integração dos testes com ferramentas de Continuous Integration (CI).
+
+Em resumo, o `__init__.py` organiza e facilita o acesso aos scripts de teste dentro da pasta `tests`, ajudando a manter o código testado e livre de erros.
+
+Documentação código 'test_core.py'
+Este código define uma classe de teste chamada `TestCoreCommon`, que herda de `TransactionCase`, um tipo de caso de teste fornecido pelo framework de testes do Odoo. Abaixo está uma explicação detalhada sobre o que esse código faz:
+
+Classe `TestCoreCommon`
+- Herança: A classe `TestCoreCommon` herda de `TransactionCase`, que é uma classe base usada para escrever testes que envolvem transações no Odoo. Quando um teste herda de `TransactionCase`, ele garante que qualquer alteração feita no banco de dados durante o teste seja revertida no final do teste, mantendo o banco de dados limpo.
+
+Método `setUp()`
+- `setUp()`:
+  - O método `setUp` é executado antes de cada método de teste. Ele serve para configurar o ambiente de teste, criando qualquer dado necessário ou inicializando variáveis que serão usadas nos testes.
+  - `super(TestCoreCommon, self).setUp()`: Este comando chama o método `setUp` da classe pai (`TransactionCase`) para garantir que a configuração básica do ambiente de teste seja feita corretamente.
+  
+Atributos Iniciais no `setUp()`
+- `self.op_batch`: Referência ao modelo `op.batch`, que provavelmente lida com lotes (turmas ou grupos de estudantes).
+- `self.op_faculty`: Referência ao modelo `op.faculty`, que lida com as informações do corpo docente.
+- `self.op_course`: Referência ao modelo `op.course`, que lida com cursos oferecidos no sistema.
+- `self.res_company`: Referência ao modelo `res.users`, que provavelmente é um erro de nome de variável, pois `res_company` sugere que deveria referenciar `res.company`, mas está sendo associada a `res.users` (usuários). Isso precisaria ser revisado.
+- `self.op_student`: Referência ao modelo `op.student`, que lida com as informações dos estudantes.
+- `self.hr_emp`: Referência ao modelo `hr.employee`, que lida com as informações dos funcionários (provavelmente relacionado a docentes e administradores).
+- `self.subject_registration`: Referência ao modelo `op.subject.registration`, que gerencia as inscrições dos estudantes em disciplinas.
+- `self.op_update`: Referência ao modelo `publisher_warranty.contract`, que provavelmente lida com contratos de garantia ou atualizações do software.
+- `self.employ_wizard`: Referência ao assistente `wizard.op.faculty.employee`, que provavelmente auxilia na gestão de funcionários no sistema.
+- `self.faculty_user_wizard`: Referência ao assistente `wizard.op.faculty`, que auxilia na gestão do corpo docente.
+- `self.studnet_wizard`: Referência ao assistente `wizard.op.student`, que auxilia na gestão dos estudantes. O nome da variável `studnet_wizard` parece conter um erro de digitação e deveria ser `student_wizard`.
+
+Propósito Geral
+Essa classe `TestCoreCommon` parece ser um ponto central para testes unitários que envolvem as principais funcionalidades do sistema, como a gestão de turmas, docentes, cursos, estudantes, e a integração com outros módulos como `hr.employee` (recursos humanos). Cada uma dessas referências pode ser usada em métodos de teste subsequentes para verificar se as funcionalidades do sistema estão funcionando como esperado.
+
+Considerações
+- Erros de Tipografia: Existe um possível erro na atribuição de `self.res_company` e no nome da variável `self.studnet_wizard`, que deveriam ser revisados.
+- Modelo de Testes: Métodos de teste reais ainda precisam ser escritos para realizar operações específicas (como criar, ler, atualizar e excluir registros) e garantir que essas operações funcionem corretamente no ambiente do Odoo.
+
+Essa estrutura básica serve como um esqueleto para a criação de uma bateria de testes que garantirá a robustez do sistema ERP educacional.
+
+Documentação código 'test_core_common.py'
+Este código define uma classe de testes chamada `TestCore`, que herda de uma classe base chamada `TestCoreCommon`. A classe `TestCore` utiliza métodos e funcionalidades da classe base, adicionando novos testes específicos para verificar a funcionalidade de diferentes componentes do sistema de gestão educacional.
+
+Estrutura Geral da Classe
+
+Classe `TestCore`
+- A classe `TestCore` herda da `TestCoreCommon`, o que significa que ela utiliza o ambiente e as configurações definidas na classe base.
+- O método `setUp` é sobrescrito, mas simplesmente chama o método `setUp` da classe pai, preparando o ambiente para cada teste.
+
+Métodos de Teste
+
+Cada método de teste na classe `TestCore` realiza verificações específicas em diferentes modelos do sistema.
+
+1. `test_case_1_batch`
+- Objetivo: Testa a funcionalidade do modelo `op.batch`.
+- Operações: 
+  - Busca todos os registros de `op.batch`.
+  - Para cada lote (batch), verifica as datas com `check_dates()` e realiza uma busca pelo nome `BOA-S1` usando `name_search`.
+
+2. `test_case_2_course`
+- Objetivo: Testa a funcionalidade do modelo `op.course`.
+- Operações: 
+  - Busca todos os registros de `op.course`.
+  - Para cada curso, obtém os templates de importação usando `get_import_templates`.
+
+3. `test_case_3_faculty`
+- Objetivo: Testa a funcionalidade do modelo `op.faculty`.
+- Operações:
+  - Busca todos os registros de `op.faculty`.
+  - Cria um novo registro de faculty com detalhes como nome, data de nascimento e gênero.
+  - Chama o método `onchange_name` para o novo registro.
+  - Para cada faculty existente, verifica a data de nascimento com `_check_birthdate`, altera o nome com `_onchange_name`, cria um registro de funcionário com `create_employee`, e obtém os templates de importação com `get_import_templates`.
+
+4. `test_case_4_hr_employe`
+- Objetivo: Testa a funcionalidade do modelo `hr.employee`.
+- Operações:
+  - Busca todos os registros de `hr.employee`.
+  - Para cada funcionário, realiza mudanças relacionadas ao usuário e endereço com `onchange_user` e `onchange_address_id`.
+
+5. `test_case_5_res_company`
+- Objetivo: Testa a criação de usuários no modelo `res.users`.
+- Operações:
+  - Busca todos os registros de usuários.
+  - Cria um usuário utilizando o método `create_user` e uma referência específica a um registro de faculty.
+
+6. `test_case_6_student`
+- Objetivo: Testa a funcionalidade do modelo `op.student`.
+- Operações:
+  - Busca todos os registros de `op.student`.
+  - Cria um novo estudante com dados como nome, data de nascimento e gênero.
+  - Para cada estudante existente, verifica e altera o nome com `_onchange_name`, verifica a data de nascimento com `_check_birthdate`, e obtém os templates de importação.
+  - Cria um usuário para o novo estudante com `create_student_user`.
+
+7. `test_case_7_subject_registartion`
+- Objetivo: Testa a funcionalidade do modelo `op.subject.registration`.
+- Operações:
+  - Cria um novo registro de inscrição em uma disciplina usando IDs de estudante, curso e lote.
+  - Para cada inscrição criada, realiza ações como `action_reset_draft`, `action_reject`, `action_approve`, `action_submitted`, e obtém os assuntos relacionados com `get_subjects`.
+
+8. `test_case_7_update`
+- Objetivo: Testa a funcionalidade de atualização do sistema.
+- Operações:
+  - Obtém uma mensagem usando `_get_message`.
+  - Executa uma atualização de notificação com `update_notification` em modo cron.
+
+9. `test_case_8_employ_wizard`
+- Objetivo: Testa a funcionalidade do assistente de criação de funcionários.
+- Operações:
+  - Cria um novo registro de assistente de funcionário com um valor booleano `user_boolean` verdadeiro.
+  - Cria um funcionário usando `create_employee`.
+
+10. `test_case_9_faculty_user_wizard`
+- Objetivo: Testa a funcionalidade do assistente de criação de usuários para o corpo docente.
+- Operações:
+  - Usa uma referência a um registro de faculty.
+  - Cria um novo assistente de faculty com a lista de IDs de faculty.
+  - Obtém os docentes usando `_get_faculties` e cria usuários para eles com `create_faculty_user`.
+
+11. `test_case_10_studnet_wizard`
+- Objetivo: Testa a funcionalidade do assistente de criação de usuários para estudantes.
+- Operações:
+  - Usa uma referência a um registro de estudante.
+  - Cria um novo assistente de estudante com a lista de IDs de estudantes.
+  - Obtém os estudantes usando `_get_students` e cria usuários para eles com `create_user`.
+
+12. Este código de teste é projetado para verificar a funcionalidade de diferentes componentes do sistema ERP educacional. Ele cobre uma ampla gama de operações, desde a gestão de lotes, cursos, e docentes, até a criação de usuários e registros de inscrição em disciplinas. Cada teste executa uma série de operações para garantir que o sistema esteja funcionando corretamente e de acordo com as especificações. Como aluno, é essencial entender como essas operações interagem com os modelos subjacentes para garantir que as funcionalidades do sistema sejam robustas e livres de erros.
