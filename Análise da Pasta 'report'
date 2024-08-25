@@ -38,3 +38,88 @@ Estrutura do Código
 
 5. Este código define ações de relatórios vinculados ao modelo `op.student`, possibilitando a geração de documentos em PDF através do sistema Odoo. O primeiro relatório gera o cartão de identificação do estudante com base no nome do estudante. O segundo relatório gera um certificado bonafide, também personalizado com o nome do estudante. Esses relatórios podem ser acessados diretamente do registro do estudante dentro do sistema.
 
+
+Documentação do Código `report_student_bonafide`
+Visão Geral
+Este arquivo XML define um template de relatório para o certificado de bonafide dos alunos no sistema OpenEduCat, utilizando o mecanismo de relatórios `QWeb` do Odoo. O certificado de bonafide é um documento oficial que confirma que um estudante está ou esteve matriculado em uma instituição educacional. O template é projetado para ser gerado em formato PDF.
+
+Estrutura do Código
+
+1. Tag Root: `<odoo>`
+   - A tag raiz que encapsula todas as definições do Odoo.
+
+2. Tag `<data>`
+   - Contém os registros de dados que serão carregados no banco de dados do Odoo.
+
+3. Template de Relatório: `<template id="report_student_bonafide">`
+   - Define o template para o relatório de certificado de bonafide.
+   - ID: `report_student_bonafide`
+   
+4. Estrutura do Template
+   - `<t t-call="web.html_container">`
+     - Envolve o conteúdo do relatório em um container HTML padrão.
+   
+   - `<t t-foreach="docs" t-as="o">`
+     - Itera sobre o conjunto de documentos (`docs`), onde `o` representa cada registro de aluno.
+
+   - `<t t-call="web.external_layout">`
+     - Utiliza o layout externo padrão do Odoo para relatórios.
+     
+   - Conteúdo do Relatório
+     - Título do Certificado
+       - Um cabeçalho centralizado exibindo "Bonafide Certificate".
+     - Corpo do Certificado
+       - Exibe uma declaração certificando que o estudante (nomeado) é ou foi um aluno regular, indicando o curso, ano, e data de nascimento conforme registrado.
+       - Campos Dinâmicos:
+         - Nome do estudante (`o.name`)
+         - Curso do estudante (`o.course_detail_ids[0].course_id.name`)
+         - Ano (lote) do estudante (`o.course_detail_ids[0].batch_id.name`)
+         - Data de nascimento (`o.birth_date`)
+     - Data e Assinatura
+       - Exibe a data atual e um espaço reservado para a assinatura do "PRINCIPAL".
+
+5. O template gera um certificado de bonafide em PDF para um ou mais alunos selecionados. Os campos do documento são preenchidos dinamicamente com informações do registro do aluno no sistema. A estrutura inclui seções bem definidas para o texto principal do certificado, data e assinatura, mantendo um design formal e institucional.
+
+Documentação do Código `report_student_idcard`
+Visão Geral
+Este arquivo XML define um template de relatório para gerar o cartão de identificação (ID Card) dos alunos no sistema OpenEduCat, utilizando o mecanismo de relatórios `QWeb` do Odoo. O ID Card inclui informações essenciais do estudante, como nome, grupo sanguíneo, data de nascimento e curso. O relatório é gerado em formato PDF.
+
+Estrutura do Código
+
+1. Tag Root: `<odoo>`
+   - A tag raiz que encapsula todas as definições do Odoo.
+
+2. Tag `<data>`
+   - Contém os registros de dados que serão carregados no banco de dados do Odoo.
+
+3. Template de Relatório: `<template id="report_student_idcard">`
+   - Define o template para o relatório do cartão de identificação do aluno.
+   - ID: `report_student_idcard`
+
+4. Estrutura do Template
+   - `<t t-call="web.html_container">`
+     - Envolve o conteúdo do relatório em um container HTML padrão.
+
+   - `<t t-foreach="docs" t-as="o">`
+     - Itera sobre o conjunto de documentos (`docs`), onde `o` representa cada registro de aluno.
+
+   - `<t t-call="web.external_layout">`
+     - Utiliza o layout externo padrão do Odoo para relatórios.
+   
+   - Conteúdo do ID Card
+     - Cabeçalho do ID Card
+       - Inclui o logotipo da empresa/instituição (`res_company.logo`) e o título "Student ID Card" junto ao nome da instituição (`res_company.partner_id.name`).
+     - Informações do Estudante
+       - A seguir são exibidas as informações do aluno:
+         - Foto do aluno (`o.image_1920`)
+         - Nome do estudante (`o.name`)
+         - Grupo sanguíneo (`o.blood_group`)
+         - Data de nascimento (`o.birth_date`)
+         - Curso atual do estudante (`o.course_detail_ids[0].course_id.name`)
+     - Rodapé
+       - Uma barra colorida para fechar o design do cartão.
+   
+   - Estilo e Formatação
+     - O layout utiliza HTML e CSS inline para criar um design simples e organizado, com divisões bem definidas para as diferentes seções do ID Card.
+
+5. Este template gera um ID Card personalizado em formato PDF para um ou mais alunos selecionados. Cada ID Card inclui o nome do aluno, grupo sanguíneo, data de nascimento, curso e uma foto. O logotipo e o nome da instituição são exibidos no cabeçalho. O design é simples, com uma borda preta ao redor do cartão e barras coloridas para destacar as seções.
