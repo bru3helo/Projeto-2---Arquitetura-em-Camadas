@@ -1,0 +1,57 @@
+Visão Geral da Arquitetura em Camadas
+
+A pasta `views` dentro deste módulo representa a camada de apresentação, onde são definidas as interfaces que conectam os usuários com a lógica de negócio e os dados do sistema.
+
+Camada de Apresentação (View Layer)
+
+A camada de apresentação, também conhecida como View Layer, é responsável pela interação entre os usuários e o sistema. No módulo `openducat_core`, essa camada é materializada principalmente pelos arquivos XML na pasta `views`. Esses arquivos especificam como os dados e as operações são exibidos e manipulados nas interfaces gráficas do usuário (GUIs).
+
+Estrutura e Propósito dos Arquivos XML
+Os arquivos XML dentro da pasta `views` seguem uma estrutura bem definida, utilizando o formato XML para descrever elementos de interface, como formulários, listas (tree views), gráficos (graph views), e outros componentes de UI. Esses arquivos definem tanto a aparência quanto o comportamento dos elementos de interface com os quais os usuários interagem.
+
+Componentes dos Arquivos XML:
+
+- Form Views (`form`): Utilizados para exibir detalhes de registros específicos em um formato de formulário. Exemplo: detalhes de um estudante ou de um curso.
+- Tree Views (`tree`): Exibem múltiplos registros em uma tabela ou lista, permitindo aos usuários ver e gerenciar várias entradas simultaneamente.
+- Search Views (`search`): Configuram as funcionalidades de pesquisa e filtragem dentro das listas e outras visualizações.
+- Kanban Views (`kanban`): Oferecem uma visualização em cartões, útil para gerenciar fluxos de trabalho e estados de processos, como a visualização de lotes de estudantes.
+- Calendar Views (`calendar`): Usadas para exibir eventos ou atividades ao longo do tempo, como um calendário de aulas ou eventos acadêmicos.
+- Graph Views (`graph`): Exibem dados de forma gráfica, como gráficos de barras ou linhas, para visualização de estatísticas, como progresso acadêmico.
+- Pivot Views (`pivot`): Oferecem visualizações analíticas que permitem ao usuário "fatiar e cortar" os dados de várias formas, semelhante a uma tabela dinâmica em Excel.
+
+Detalhamento dos Arquivos XML
+
+1. batch_view.xml:
+   - Camada de Apresentação: Define as views para gerenciar turmas ou lotes de estudantes. Inclui formulários detalhados para editar informações de turmas, tree views para listar todas as turmas, e possivelmente gráficos para analisar o número de alunos por turma.
+   - Interação com a Camada de Lógica de Negócio**: Conecta-se à lógica de negócios para validar e processar dados de turmas, como capacidade máxima de alunos, status da turma, etc.
+   - Exemplo de Uso: Um administrador acadêmico acessa a listagem de turmas para gerenciar o número de alunos inscritos em cada uma.
+
+2. course_view.xml:
+   - Camada de Apresentação: Configura as interfaces para gerenciar cursos oferecidos pela instituição. Inclui formulários para adicionar ou editar cursos, listagens dos cursos existentes, e ferramentas para analisar a distribuição de disciplinas por departamento ou área de estudo.
+   - Integração com `i18n`: As descrições e títulos dos cursos são traduzidos conforme o idioma do usuário, utilizando o sistema de internacionalização.
+   - Exemplo de Uso: Um coordenador de curso visualiza os cursos disponíveis para planejar o calendário acadêmico.
+
+3. student_view.xml:
+   - Camada de Apresentação: Especifica as views para gerenciamento de informações de estudantes. Inclui formulários detalhados para cadastro, listagens de estudantes, e possivelmente dashboards que mostram o progresso acadêmico e outras estatísticas relevantes.
+   - Conexão com a Camada de Dados: Os dados de estudantes são recuperados e persistidos no banco de dados por meio da lógica de negócios. As views permitem que os administradores visualizem e editem essas informações de maneira estruturada.
+   - Exemplo de Uso: Um administrador acessa o registro de um estudante para atualizar informações de contato ou visualizar o histórico acadêmico.
+
+4. department_view.xml:
+   - Camada de Apresentação: Define as interfaces para a gestão dos departamentos da instituição. Isso pode incluir a adição de novos departamentos, edição de informações existentes, e a visualização de todos os departamentos em um formato de lista ou árvore hierárquica.
+   - Interação com a Lógica de Negócio: A lógica de negócios valida que as informações de cada departamento estão de acordo com as políticas institucionais, como número mínimo de docentes, cursos oferecidos, etc.
+   - Exemplo de Uso: Um administrador pode adicionar um novo departamento ou reorganizar os departamentos existentes conforme mudanças institucionais.
+
+5. faculty_view.xml:
+   - Camada de Apresentação: Especifica as visualizações para a gestão dos docentes da instituição. Isso inclui o gerenciamento de perfis de professores, disciplinas atribuídas, e horários de aulas.
+   - Conexão com a Camada de Dados: As informações dos docentes são armazenadas na base de dados e acessadas conforme necessário para exibição ou edição.
+   - Exemplo de Uso: Um gerente de departamento revisa o horário de um professor para evitar conflitos de horário.
+
+Considerações Avançadas sobre a Camada de Apresentação
+- Segurança e Controle de Acesso: As visualizações configuradas em `views` também podem ser vinculadas a controles de acesso, garantindo que apenas usuários com as permissões corretas possam visualizar ou editar certos dados. Isso é especialmente importante em ambientes educacionais, onde informações sensíveis, como registros de estudantes e salários de professores, devem ser protegidas.
+  
+- Personalização e Extensibilidade: A arquitetura baseada em XML permite que cada instituição personalize suas visualizações de acordo com as necessidades específicas. Por exemplo, uma universidade pode optar por adicionar campos extras em `student_view.xml` para capturar informações adicionais relevantes para suas políticas.
+
+- Itegração com Outras Camadas: A camada de apresentação não funciona isoladamente; ela depende da camada de lógica de negócios para validar, processar, e manipular dados antes de apresentá-los aos usuários. Além disso, a integração com a camada de dados permite que as visualizações reflitam as informações mais atualizadas, garantindo a integridade e a consistência dos dados.
+
+Conclusão
+A documentação da pasta `views` dentro do módulo `openducat_core` revela que esta camada é crucial para garantir uma interação eficiente e intuitiva entre os usuários e o sistema, enquanto mantém a flexibilidade necessária para adaptações e personalizações futuras. A separação clara entre as camadas e a modularidade dos componentes permite uma manutenção simplificada, além de facilitar a escalabilidade e a internacionalização do sistema, atendendo às diversas necessidades das instituições de ensino em diferentes regiões e contextos.
