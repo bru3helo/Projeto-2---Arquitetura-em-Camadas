@@ -1,0 +1,36 @@
+Visão Geral da Arquitetura
+O sistema ERP educacional é estruturado em uma arquitetura em camadas para garantir modularidade, escalabilidade, manutenibilidade e facilidade de internacionalização. Um dos componentes centrais do sistema é o módulo `openducat_core`, que desempenha um papel fundamental na gestão de operações educacionais, como matrículas, currículos, horários, entre outros.
+
+Camadas da Arquitetura
+
+1. Camada de Apresentação (Interface do Usuário)
+   - Função: Esta camada é responsável pela interação direta com o usuário final. É aqui que são exibidas as interfaces gráficas (GUIs), formulários, dashboards, relatórios, entre outros componentes visuais. 
+   - Relação com o `i18n`: A internacionalização (`i18n`) permite que essa camada adapte a interface de acordo com o idioma preferido do usuário. Os arquivos `.po` dentro da pasta `i18n` são fundamentais para essa adaptação. Cada arquivo `.po` contém pares de chave-valor, onde a chave é o texto original em inglês (ou outro idioma base), e o valor é a tradução correspondente. Assim, quando a aplicação precisa exibir um texto, ela busca a tradução no arquivo `.po` correspondente ao idioma selecionado.
+   - Exemplo: Se um usuário escolher "Português" como idioma, o sistema utilizará as traduções do arquivo `pt.po` para exibir os textos em português.
+
+2. Camada de Aplicação
+   - Função: Esta camada lida com a lógica de negócio do ERP. Ela gerencia fluxos de trabalho, processos acadêmicos, matrículas, notas, presença, etc. Além disso, garante a correta aplicação das regras de negócios educacionais, como requisitos de matrícula, progressão de cursos, entre outros.
+   - Interação com `i18n`: Durante o processamento das operações, a camada de aplicação pode precisar formatar e exibir mensagens de erro, avisos ou notificações ao usuário. Estas mensagens também são internacionalizadas, utilizando as traduções disponíveis na camada de apresentação.
+   - Exemplo: Ao tentar matricular um aluno em um curso que já atingiu o limite de vagas, a lógica de negócio acionaria uma mensagem de erro, que seria traduzida e exibida ao usuário conforme o idioma configurado.
+
+3. Camada de Dados
+   - Função: Nesta camada são gerenciados os dados persistentes do sistema, incluindo informações sobre alunos, cursos, currículos, notas, entre outros. A camada de dados é responsável pela comunicação com o banco de dados, garantindo a persistência e a recuperação dos dados conforme necessário.
+   - Internacionalização na Base de Dados: Embora os arquivos `.po` tratem principalmente da tradução de textos da interface, a camada de dados também pode conter dados dependentes de localização, como moedas, formatos de data, entre outros. No entanto, a tradução de textos de interface é geralmente tratada pela camada de apresentação.
+
+4. Camada de Internacionalização (i18n)
+   - Função: A pasta `i18n` é uma representação clara da camada de internacionalização do sistema. Ela contém os arquivos de tradução `.po`, que são essenciais para adaptar o sistema a diferentes idiomas e culturas.
+   - Estrutura dos Arquivos `.po`: 
+     - Cada arquivo `.po` segue uma estrutura padrão, onde cada entrada é composta por uma string original (`msgid`) e sua tradução (`msgstr`). 
+     - Exemplo;
+
+       msgid "Student"
+       msgstr "Aluno"
+
+     - Essas traduções são utilizadas dinamicamente pela aplicação para exibir as interfaces no idioma correto.
+
+Considerações sobre a Internacionalização
+- Escalabilidade: A arquitetura modular permite adicionar novos idiomas simplesmente adicionando novos arquivos `.po` na pasta `i18n`. Isto torna o sistema altamente escalável em termos de suporte a múltiplas regiões.
+-Manutenção: Como cada idioma é gerido de forma independente nos arquivos `.po`, a manutenção e atualização das traduções é facilitada. Novos termos ou mudanças podem ser facilmente integrados sem impactar o restante do sistema.
+
+Conclusão
+O módulo `openducat_core`, com sua pasta `i18n`, exemplifica a implementação de uma arquitetura em camadas focada na internacionalização dentro de um sistema ERP educacional. A separação clara entre a lógica de aplicação, interface do usuário e internacionalização garante que o sistema seja flexível, adaptável e capaz de atender a uma audiência global com eficiência.
